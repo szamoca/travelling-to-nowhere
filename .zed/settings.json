@@ -26,7 +26,7 @@
       "language_servers": ["...", "eslint"]
     },
     "CSS": {
-      "language_servers": ["...", "eslint"]
+      "language_servers": ["...", "eslint", "tailwindcss-intellisense-css", "!vscode-css-language-server"]
     }
     // Add other languages as needed
   },

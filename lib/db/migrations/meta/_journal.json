@@ -8,6 +8,13 @@
       "when": 1784724837607,
       "tag": "0000_careless_zaran",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1784802663227,
+      "tag": "0001_chemical_wolfpack",
+      "breakpoints": true
     }
   ]
 }

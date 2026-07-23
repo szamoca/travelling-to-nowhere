@@ -8,9 +8,7 @@
         <p class="py-6">
           This is a travel log for all the exciting things you've done in your life so far. Add places, events, and memories. Let's get going!
         </p>
-        <button class="btn btn-accent">
-          Sign in with GitHub <Icon name="pixelarticons:github" size="24" />
-        </button>
+        <AuthButton />
       </div>
     </div>
   </div>

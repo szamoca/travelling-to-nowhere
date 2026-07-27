@@ -1,4 +1,4 @@
-import { createAuthClient } from "better-auth/client";
+import { createAuthClient } from "better-auth/vue";
 
 const authClient = createAuthClient();
 
@@ -23,20 +23,26 @@ export const useAuthStore = defineStore("useAuthStore",
   //   },
   // }
   () => {
-    const loading = ref(false);
+    const session = authClient.useSession();
+    const user = computed(() => session.value.data?.user);
+    const loading = computed(() => session.value.isPending || session.value.isRefetching);
     async function signIn() {
-      loading.value = true;
       await authClient.signIn.social({
         provider: "github",
         callbackURL: "/dashboard",
         errorCallbackURL: "/error",
       });
-      loading.value = false;
+    }
+    async function signOut() {
+      await authClient.signOut();
+      navigateTo("/");
     }
 
     // Return types are inferred this way while with the old way there might be some extra work there
     return {
       loading,
       signIn,
+      signOut,
+      user,
     };
   });

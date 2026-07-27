@@ -23,9 +23,22 @@ export const useAuthStore = defineStore("useAuthStore",
   //   },
   // }
   () => {
-    const session = authClient.useSession();
-    const user = computed(() => session.value.data?.user);
-    const loading = computed(() => session.value.isPending || session.value.isRefetching);
+    const session = ref<
+      Awaited<
+        ReturnType<
+          typeof authClient.useSession
+        >
+      > | null
+    >(null);
+
+    // I don't exactly understand this part and also do not get the desired SSR results like in the crash course so I might need to be looking into this more
+    async function init() {
+      const data = await authClient.useSession(useFetch);
+      session.value = data;
+    }
+
+    const user = computed(() => session.value?.data?.user);
+    const loading = computed(() => session.value?.isPending);
     async function signIn() {
       await authClient.signIn.social({
         provider: "github",
@@ -40,6 +53,7 @@ export const useAuthStore = defineStore("useAuthStore",
 
     // Return types are inferred this way while with the old way there might be some extra work there
     return {
+      init,
       loading,
       signIn,
       signOut,

@@ -1,5 +1,14 @@
 <script setup lang="ts">
 const isSideBarOpen = ref(true);
+
+function toggleSideBar() {
+  isSideBarOpen.value = !isSideBarOpen.value;
+  localStorage.setItem("isSideBarOpen", isSideBarOpen.value.toString());
+}
+
+onMounted(() => {
+  isSideBarOpen.value = localStorage.getItem("isSideBarOpen") === "true";
+});
 </script>
 
 <template>
@@ -8,7 +17,7 @@ const isSideBarOpen = ref(true);
       <div
         class="flex hover:cursor-pointer hover:bg-base-300 p-1"
         :class="{ 'justify-center': !isSideBarOpen, 'justify-end': isSideBarOpen }"
-        @click="isSideBarOpen = !isSideBarOpen"
+        @click="toggleSideBar"
       >
         <Icon
           v-if="isSideBarOpen"

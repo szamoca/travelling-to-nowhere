@@ -3,10 +3,10 @@ const colorMode = useColorMode();
 
 const isDark = computed({
   get() {
-    return colorMode.value === "dim";
+    return colorMode.value === "sunset";
   },
   set(value) {
-    colorMode.preference = value ? "dim" : "garden";
+    colorMode.preference = value ? "sunset" : "emerald";
   },
 });
 </script>

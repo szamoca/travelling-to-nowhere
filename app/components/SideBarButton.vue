@@ -13,7 +13,9 @@ const { path } = useRoute();
   <div
     class="tooltip-right"
     :data-tip="showLabel ? undefined : label"
-    :class="{ tooltip: !showLabel }"
+    :class="{
+      tooltip: !showLabel,
+    }"
   >
     <NuxtLink
       :class="{

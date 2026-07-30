@@ -62,6 +62,11 @@ onMounted(() => {
       </div>
     </div>
     <div class="flex-1">
+      <!-- By moving the pages/dashboard/index.vue file into the pages/dashboard.vue location -->
+      <!-- We get access to nested routes -->
+      <!-- Meaning whenever we go to a dashboard/whatever route, -->
+      <!-- Nuxt will look for whatever.vue inside the pages/dashboard folder -->
+      <!-- And we just need to keep the page resolver NuxtPage component here -->
       <NuxtPage />
     </div>
   </div>

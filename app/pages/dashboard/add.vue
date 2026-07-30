@@ -11,12 +11,13 @@ const submitted = ref(false);
 const { handleSubmit, errors, setErrors, meta } = useForm({
   validationSchema: toTypedSchema(InsertLocation),
 });
+const { $csrfFetch } = useNuxtApp();
 
 const onSubmit = handleSubmit(async (values) => {
   try {
     loading.value = true;
     submitError.value = "";
-    await $fetch("/api/locations", {
+    await $csrfFetch("/api/locations", {
       method: "POST",
       body: values,
     });

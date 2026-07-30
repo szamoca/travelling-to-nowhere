@@ -4,6 +4,7 @@ import type { FetchError } from "ofetch";
 import { InsertLocation } from "~~/lib/db/schema";
 
 const router = useRouter();
+const loading = ref(false);
 const submitError = ref("");
 
 const { handleSubmit, errors, setErrors, meta } = useForm({
@@ -12,6 +13,8 @@ const { handleSubmit, errors, setErrors, meta } = useForm({
 
 const onSubmit = handleSubmit(async (values) => {
   try {
+    loading.value = true;
+    submitError.value = "";
     const inserted = await $fetch("/api/locations", {
       method: "POST",
       body: values,
@@ -24,6 +27,9 @@ const onSubmit = handleSubmit(async (values) => {
       setErrors(error.data.data);
     }
     submitError.value = error.statusMessage || "An unknown error occurred";
+  }
+  finally {
+    loading.value = false;
   }
 });
 
@@ -40,7 +46,7 @@ onBeforeRouteLeave(() => {
 </script>
 
 <template>
-  <div class="container max-w-md mx-auto">
+  <div class="container max-w-md mx-auto pb-16">
     <div class="my-4">
       <h1 class="text-lg">
         Add location
@@ -61,28 +67,33 @@ onBeforeRouteLeave(() => {
         name="name"
         label="Name"
         type="text"
+        :disabled="loading"
         :error="errors.name"
       />
       <AppFormField
         name="description"
         label="Description"
         type="textarea"
+        :disabled="loading"
         :error="errors.description"
       />
       <AppFormField
         name="latitude"
         label="Latitude"
         type="number"
+        :disabled="loading"
         :error="errors.latitude"
       />
       <AppFormField
         name="longitude"
         label="Longitude"
         type="number"
+        :disabled="loading"
         :error="errors.longitude"
       />
       <div class="flex justify-end gap-3">
         <button
+          :disabled="loading"
           type="button"
           class="btn btn-soft btn-secondary"
           @click="router.back()"
@@ -90,9 +101,18 @@ onBeforeRouteLeave(() => {
           Cancel
           <Icon name="pixelarticons:arrow-bar-left" size="24" />
         </button>
-        <button type="submit" class="btn btn-primary">
+        <button
+          :disabled="loading"
+          type="submit"
+          class="btn btn-primary"
+        >
           Add
-          <Icon name="pixelarticons:image-plus" size="24" />
+          <span v-if="loading" class="loading loading-dots loading-sm" />
+          <Icon
+            v-else
+            name="pixelarticons:image-plus"
+            size="24"
+          />
         </button>
       </div>
     </form>

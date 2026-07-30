@@ -5,10 +5,6 @@ const { handleSubmit, errors } = useForm({
   validationSchema: toTypedSchema(InsertLocation),
 });
 
-effect(() => {
-  console.log(toRaw(errors.value));
-});
-
 const onSubmit = handleSubmit((values) => {
   console.log(values);
 });
@@ -25,54 +21,30 @@ const onSubmit = handleSubmit((values) => {
       </p>
     </div>
     <form class="flex flex-col gap-2.5" @submit.prevent="onSubmit">
-      <fieldset class="fieldset">
-        <label class="label" for="name">Name</label>
-        <Field
-          name="name"
-          type="text"
-          class="input w-full"
-          :class="{ 'input-error': errors.name }"
-        />
-        <p v-if="errors.name" class="label text-error">
-          {{ errors.name }}
-        </p>
-      </fieldset>
-      <fieldset class="fieldset">
-        <label class="label" for="description">Description</label>
-        <Field
-          name="description"
-          type="textarea"
-          class="textarea w-full"
-          :class="{ 'input-error': errors.description }"
-        />
-        <p v-if="errors.description" class="label text-error">
-          {{ errors.description }}
-        </p>
-      </fieldset>
-      <fieldset class="fieldset">
-        <label class="label" for="latitude">Latitude</label>
-        <Field
-          name="latitude"
-          type="number"
-          class="input w-full"
-          :class="{ 'input-error': errors.latitude }"
-        />
-        <p v-if="errors.latitude" class="label text-error">
-          {{ errors.latitude }}
-        </p>
-      </fieldset>
-      <fieldset class="fieldset">
-        <label class="label" for="longitude">Longitude</label>
-        <Field
-          name="longitude"
-          type="number"
-          class="input w-full"
-          :class="{ 'input-error': errors.longitude }"
-        />
-        <p v-if="errors.longitude" class="label text-error">
-          {{ errors.longitude }}
-        </p>
-      </fieldset>
+      <AppFormField
+        name="name"
+        label="Name"
+        type="text"
+        :error="errors.name"
+      />
+      <AppFormField
+        name="description"
+        label="Description"
+        type="textarea"
+        :error="errors.description"
+      />
+      <AppFormField
+        name="latitude"
+        label="Latitude"
+        type="number"
+        :error="errors.latitude"
+      />
+      <AppFormField
+        name="longitude"
+        label="Longitude"
+        type="number"
+        :error="errors.longitude"
+      />
       <div class="flex justify-end gap-3">
         <button type="button" class="btn btn-soft btn-secondary">
           Cancel

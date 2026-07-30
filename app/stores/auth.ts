@@ -31,7 +31,8 @@ export const useAuthStore = defineStore("useAuthStore",
       > | null
     >(null);
 
-    // I don't exactly understand this part and also do not get the desired SSR results like in the crash course so I might need to be looking into this more
+    // I don't exactly understand this part and also do not get the desired SSR results like in the crash course
+    // Therefore I might need to be looking into this more
     async function init() {
       const data = await authClient.useSession(useFetch);
       session.value = data;
@@ -40,14 +41,23 @@ export const useAuthStore = defineStore("useAuthStore",
     const user = computed(() => session.value?.data?.user);
     const loading = computed(() => session.value?.isPending);
     async function signIn() {
+      const { csrf } = useCsrf();
+      const headers = new Headers();
+      headers.append("csrf-token", csrf);
       await authClient.signIn.social({
         provider: "github",
         callbackURL: "/dashboard",
         errorCallbackURL: "/error",
+        fetchOptions: {
+          headers,
+        },
       });
     }
     async function signOut() {
-      await authClient.signOut();
+      const { csrf } = useCsrf();
+      const headers = new Headers();
+      headers.append("csrf-token", csrf);
+      await authClient.signOut({ fetchOptions: { headers } });
       navigateTo("/");
     }
 

@@ -19,6 +19,19 @@ export default withNuxt(
     },
     {
       rules: {
+        "vue/max-len": ["error", {
+          code: 120,
+          template: 120,
+          ignoreUrls: true,
+          ignoreHTMLAttributeValues: false,
+          ignoreHTMLTextContents: true,
+        }],
+        "vue/object-property-newline": ["error", {
+          allowAllPropertiesOnSameLine: false,
+        }],
+        "vue/object-curly-newline": ["error", {
+          ObjectExpression: "always",
+        }],
         "vue/max-attributes-per-line": [
           "error",
           {

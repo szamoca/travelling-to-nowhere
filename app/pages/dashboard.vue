@@ -13,10 +13,19 @@ onMounted(() => {
 
 <template>
   <div class="flex-1 flex">
-    <div class="bg-base-200 transition-all duration-300" :class="{ 'w-64': isSideBarOpen, 'w-12': !isSideBarOpen }">
+    <div
+      class="bg-base-200 transition-all duration-300"
+      :class="{
+        'w-64': isSideBarOpen,
+        'w-12': !isSideBarOpen,
+      }"
+    >
       <div
         class="flex hover:cursor-pointer hover:bg-base-300 p-1"
-        :class="{ 'justify-center': !isSideBarOpen, 'justify-end': isSideBarOpen }"
+        :class="{
+          'justify-center': !isSideBarOpen,
+          'justify-end': isSideBarOpen,
+        }"
         @click="toggleSideBar"
       >
         <Icon
@@ -53,7 +62,12 @@ onMounted(() => {
       </div>
     </div>
     <div class="flex-1">
-      Content
+      <!-- By moving the pages/dashboard/index.vue file into the pages/dashboard.vue location -->
+      <!-- We get access to nested routes -->
+      <!-- Meaning whenever we go to a dashboard/whatever route, -->
+      <!-- Nuxt will look for whatever.vue inside the pages/dashboard folder -->
+      <!-- And we just need to keep the page resolver NuxtPage component here -->
+      <NuxtPage />
     </div>
   </div>
 </template>

@@ -1,14 +1,30 @@
 <script setup lang="ts">
+import type { FetchError } from "ofetch";
+
 import { InsertLocation } from "~~/lib/db/schema";
 
 const router = useRouter();
+const submitError = ref("");
 
-const { handleSubmit, errors, meta } = useForm({
+const { handleSubmit, errors, setErrors, meta } = useForm({
   validationSchema: toTypedSchema(InsertLocation),
 });
 
-const onSubmit = handleSubmit((values) => {
-  console.log(values);
+const onSubmit = handleSubmit(async (values) => {
+  try {
+    const inserted = await $fetch("/api/locations", {
+      method: "POST",
+      body: values,
+    });
+    console.log(inserted);
+  }
+  catch (e) {
+    const error = e as FetchError;
+    if (error.data?.data) {
+      setErrors(error.data.data);
+    }
+    submitError.value = error.statusMessage || "An unknown error occurred";
+  }
 });
 
 onBeforeRouteLeave(() => {
@@ -32,6 +48,13 @@ onBeforeRouteLeave(() => {
       <p class="text-sm">
         A location is a place you have travelled or will travel to. It can be a city, country, state or point of interest. You can add specific times you visited this location after adding it.
       </p>
+    </div>
+    <div
+      v-if="submitError"
+      role="alert"
+      class="alert alert-soft alert-error"
+    >
+      <span>{{ submitError }}</span>
     </div>
     <form class="flex flex-col gap-2.5" @submit.prevent="onSubmit">
       <AppFormField

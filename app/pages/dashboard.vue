@@ -15,13 +15,17 @@ onMounted(() => {
   <div class="flex-1 flex">
     <div
       class="bg-base-200 transition-all duration-300"
-      :class="{ 'w-64': isSideBarOpen,
-                'w-12': !isSideBarOpen }"
+      :class="{
+        'w-64': isSideBarOpen,
+        'w-12': !isSideBarOpen,
+      }"
     >
       <div
         class="flex hover:cursor-pointer hover:bg-base-300 p-1"
-        :class="{ 'justify-center': !isSideBarOpen,
-                  'justify-end': isSideBarOpen }"
+        :class="{
+          'justify-center': !isSideBarOpen,
+          'justify-end': isSideBarOpen,
+        }"
         @click="toggleSideBar"
       >
         <Icon

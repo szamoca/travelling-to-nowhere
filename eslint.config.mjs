@@ -30,7 +30,7 @@ export default withNuxt(
           allowAllPropertiesOnSameLine: false,
         }],
         "vue/object-curly-newline": ["error", {
-          ObjectExpression: { minProperties: 3, consistent: true },
+          ObjectExpression: "always",
         }],
         "vue/max-attributes-per-line": [
           "error",

@@ -16,7 +16,11 @@ const { path } = useRoute();
     :class="{ tooltip: !showLabel }"
   >
     <NuxtLink
-      :class="{ 'text-secondary': path === href, 'justify-start': showLabel, 'justify-center': !showLabel }"
+      :class="{
+        'text-secondary': path === href,
+        'justify-start': showLabel,
+        'justify-center': !showLabel,
+      }"
       class="flex gap-2 p-2 hover:bg-base-300 hover:cursor-pointer flex-nowrap"
       :to="href"
     >

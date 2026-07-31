@@ -1,35 +1,35 @@
 <script setup lang="ts">
-const { label, icon, href, showLabel } = defineProps<{
+const props = defineProps<{
   label: string;
   icon: string;
   href: string;
   showLabel: boolean;
 }>();
 
-const { path } = useRoute();
+const route = useRoute();
 </script>
 
 <template>
   <div
     class="tooltip-right"
-    :data-tip="showLabel ? undefined : label"
+    :data-tip="props.showLabel ? undefined : label"
     :class="{
-      tooltip: !showLabel,
+      tooltip: !props.showLabel,
     }"
   >
     <NuxtLink
       :class="{
-        'text-secondary': path === href,
-        'justify-start': showLabel,
-        'justify-center': !showLabel,
+        'text-secondary': route.path === href,
+        'justify-start': props.showLabel,
+        'justify-center': !props.showLabel,
       }"
       class="flex gap-2 p-2 hover:bg-base-300 hover:cursor-pointer flex-nowrap"
-      :to="href"
+      :to="props.href"
     >
-      <Icon :name="icon" size="24" />
+      <Icon :name="props.icon" size="24" />
       <Transition name="grow">
-        <span v-if="showLabel">
-          {{ label }}
+        <span v-if="props.showLabel">
+          {{ props.label }}
         </span>
       </Transition>
     </NuxtLink>
